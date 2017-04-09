@@ -1,10 +1,14 @@
-# Project Title
-Description.... [link](http://link_to_project)
+# Basic Data Strucutures and Algorithms
+
+Build a simple binary tree data structure from some arbitrary input along with the "crawler" function that will locate data inside of it.
+
+Part of [The Odin Project's](http://www.theodinproject.com) Ruby Curriculum. More information [here](http://www.theodinproject.com/courses/ruby-programming/lessons/data-structures-and-algorithms)
 
 ## Use
 
 ## Development Languages
-* 
+* Ruby v2.4
+* RSpec v3.5.0
 
 ## TODO
 1. 
