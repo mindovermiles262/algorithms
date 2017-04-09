@@ -20,9 +20,17 @@ describe 'BuildTree' do
 
     context 'from an array' do
             before do
-                @tree = BuildTree.new( [1,4,7,9] )
+                @tree = BuildTree.new( [1,4,7,3,9] )
             end
 
+        it 'sets root node' do
+            expect(@tree.root_node.value).to eql(1)
+        end
+
+        it 'tracks parent node' do
+            expect(@tree.root_node.right_child.parent.value).to eql(1)
+        end
+        
         it 'works left' do
             expect(@tree.root_node.left_child).to eql(nil)
         end
@@ -31,14 +39,9 @@ describe 'BuildTree' do
             expect(@tree.root_node.right_child.value).to eql(4)
         end
 
-        it 'tracks parent node' do
-            expect(@tree.root_node.right_child.parent.value).to eql(1)
+        it 'works right then left' do
+            expect(@tree.root_node.right_child.left_child.value).to eql(3)
         end
-
-        it 'sets root node' do
-            expect(@tree.root_node.value).to eql(1)
-        end
-        
     end
         
 end
