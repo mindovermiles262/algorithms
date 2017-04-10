@@ -75,3 +75,7 @@ describe '#breadth_first_search' do
         expect(node.parent.value).to eql(1)
     end
 end
+
+describe '#depth_first_search' do
+    # left off here 04/10
+end

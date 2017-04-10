@@ -29,6 +29,9 @@ class BuildTree
         return nil
     end
 
+    def depth_first_search(query)
+        # left off here 04/10/17 
+    end
 
     private
 
