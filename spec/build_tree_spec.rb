@@ -11,7 +11,7 @@ describe "Node" do
     end
 end
 
-describe 'BuildTree' do
+describe '#build_tree' do
     context 'initialization' do
         it 'raises error if no array passed' do
             expect { BuildTree.new }.to raise_error(ArgumentError)
@@ -44,4 +44,34 @@ describe 'BuildTree' do
         end
     end
         
+end
+
+describe '#breadth_first_search' do
+        before do
+            @tree = BuildTree.new( [4,1,7,6,3,9] )
+        end
+
+    it 'returns nil if query not found' do
+        expect(@tree.breadth_first_search(8)).to eql(nil)
+    end
+
+    it 'finds query in root node' do
+        node = @tree.breadth_first_search(4)
+        expect(node.value).to eql(4)
+    end
+
+    it 'finds query in left child' do
+        node = @tree.breadth_first_search(6)
+        expect(node.parent.value).to eql(7)
+    end
+
+    it 'finds query in right child of root' do
+        node = @tree.breadth_first_search(7)
+        expect(node.parent.value).to eql(4)
+    end
+
+    it 'finds query in right childs' do
+        node = @tree.breadth_first_search(3)
+        expect(node.parent.value).to eql(1)
+    end
 end

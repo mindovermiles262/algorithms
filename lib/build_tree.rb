@@ -8,6 +8,27 @@ class BuildTree
         build_tree(array)
     end
 
+    def breadth_first_search(query)
+        # Visit all nodes at the same level before visiting nodes at next deeper 
+        # level. Enqueues left then right child nodes and checks value FIFO.
+        # Returns nil if query not found
+        
+        queue = Array.new
+        queue << @root_node
+
+        until queue.empty?
+            current_node = queue.shift
+            if current_node.value == query
+                return current_node
+            else
+                queue << current_node.left_child if current_node.left_child
+                queue << current_node.right_child if current_node.right_child
+            end
+        end
+
+        return nil
+    end
+
 
     private
 
