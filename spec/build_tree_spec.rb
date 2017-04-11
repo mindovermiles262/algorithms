@@ -11,71 +11,110 @@ describe "Node" do
     end
 end
 
-describe '#build_tree' do
-    context 'initialization' do
-        it 'raises error if no array passed' do
-            expect { BuildTree.new }.to raise_error(ArgumentError)
+describe 'BuildTree' do
+    describe '#build_tree' do
+        context 'initialization' do
+            it 'raises error if no array passed' do
+                expect { BuildTree.new }.to raise_error(ArgumentError)
+            end
         end
-    end
 
-    context 'from an array' do
-            before do
-                @tree = BuildTree.new( [1,4,7,3,9] )
+        context 'from an array' do
+                before do
+                    @tree = BuildTree.new( [1,4,7,3,9] )
+                end
+
+            it 'sets root node' do
+                expect(@tree.root_node.value).to eql(1)
             end
 
-        it 'sets root node' do
-            expect(@tree.root_node.value).to eql(1)
+            it 'tracks parent node' do
+                expect(@tree.root_node.right_child.parent.value).to eql(1)
+            end
+            
+            it 'works left' do
+                expect(@tree.root_node.left_child).to eql(nil)
+            end
+            
+            it 'works right' do
+                expect(@tree.root_node.right_child.value).to eql(4)
+            end
+
+            it 'works right then left' do
+                expect(@tree.root_node.right_child.left_child.value).to eql(3)
+            end
+        end
+            
+    end
+
+    describe '#breadth_first_search' do
+            before do
+                @tree = BuildTree.new( [4,1,7,6,3,9] )
+            end
+
+        it 'returns nil if query not found' do
+            expect(@tree.breadth_first_search(8)).to eql(nil)
         end
 
-        it 'tracks parent node' do
-            expect(@tree.root_node.right_child.parent.value).to eql(1)
+        it 'finds query in root node' do
+            node = @tree.breadth_first_search(4)
+            expect(node.value).to eql(4)
         end
+
+        it 'finds query in left child' do
+            node = @tree.breadth_first_search(6)
+            expect(node.parent.value).to eql(7)
+        end
+
+        it 'finds query in right child of root' do
+            node = @tree.breadth_first_search(7)
+            expect(node.parent.value).to eql(4)
+        end
+
+        it 'finds query in right childs' do
+            node = @tree.breadth_first_search(3)
+            expect(node.parent.value).to eql(1)
+        end
+    end
+
+    describe '#depth_first_search' do
+            before do
+                @tree = BuildTree.new( [4,1,7,6,3,9] )
+            end
         
-        it 'works left' do
-            expect(@tree.root_node.left_child).to eql(nil)
-        end
-        
-        it 'works right' do
-            expect(@tree.root_node.right_child.value).to eql(4)
+        it 'returns nil if query not found' do
+            expect(@tree.depth_first_search(8)).to eql(nil)
         end
 
-        it 'works right then left' do
-            expect(@tree.root_node.right_child.left_child.value).to eql(3)
-        end
-    end
-        
-end
-
-describe '#breadth_first_search' do
-        before do
-            @tree = BuildTree.new( [4,1,7,6,3,9] )
+        it 'finds query in root node' do
+            node = @tree.depth_first_search(4)
+            expect(node.value).to eql(4)
         end
 
-    it 'returns nil if query not found' do
-        expect(@tree.breadth_first_search(8)).to eql(nil)
-    end
+        it 'finds query in left child' do
+            node = @tree.depth_first_search(1)
+            expect(node.value).to eql(1)
+            expect(node.parent.value).to eql(4)
+        end
 
-    it 'finds query in root node' do
-        node = @tree.breadth_first_search(4)
-        expect(node.value).to eql(4)
-    end
+        it 'finds query in right child' do
+            node = @tree.depth_first_search(7)
+            expect(node.value).to eql(7)
+            expect(node.parent.value).to eql(4)
+        end
 
-    it 'finds query in left child' do
-        node = @tree.breadth_first_search(6)
-        expect(node.parent.value).to eql(7)
-    end
+        it 'finds query in right child of left subchild' do
+            node = @tree.depth_first_search(3)
+            expect(node.value).to eql(3)
+            expect(node.parent.value).to eql(1)
+            expect(node.parent.parent.value).to eql(4)
+        end
 
-    it 'finds query in right child of root' do
-        node = @tree.breadth_first_search(7)
-        expect(node.parent.value).to eql(4)
+        it 'finds query in left child of right subchild' do
+            node = @tree.depth_first_search(6)
+            expect(node.value).to eql(6)
+            expect(node.parent.value).to eql(7)
+            expect(node.parent.parent.value).to eql(4)
+        end
     end
-
-    it 'finds query in right childs' do
-        node = @tree.breadth_first_search(3)
-        expect(node.parent.value).to eql(1)
-    end
-end
-
-describe '#depth_first_search' do
-    # left off here 04/10
 end

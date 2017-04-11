@@ -29,8 +29,14 @@ class BuildTree
         return nil
     end
 
-    def depth_first_search(query)
-        # left off here 04/10/17 
+    def depth_first_search(query, current_node = @root_node)
+        # Preorder traversal checks <root> <left-subtree> <right-subtree>
+        return current_node if current_node.value == query # check <root> node
+        search = depth_first_search(query, current_node.left_child) if current_node.left_child
+        return search if search != nil # check <left-subtree>
+        search = depth_first_search(query, current_node.right_child) if current_node.right_child
+        return search if search != nil # check <right-subtree>
+        return nil # query not found
     end
 
     private
